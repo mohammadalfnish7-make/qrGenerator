@@ -1,0 +1,11 @@
+# Git & Workspace
+.git
+.gitignore
+.DS_Store
+*.swp
+*.swo
+
+# Documentation / Scratch
+README.md
+.agents
+.gemini

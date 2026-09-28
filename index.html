@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Generate high-precision QR codes for websites, Instagram, X, LinkedIn, YouTube, TikTok, WhatsApp, Telegram, Wi-Fi, and vCards with custom center logos and vector SVG export.">
+  <meta name="theme-color" content="#07090e">
+  <title>QR Studio Pro — All-in-One Link & Social QR Generator with Custom Logo</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <div class="brand-logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+            <rect x="14" y="14" width="3" height="3"/>
+            <path d="M14 20h3v-3"/>
+            <path d="M20 14v6"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">QR Studio Pro</h1>
+          <p class="brand-subtitle">Universal QR Generator for Social Media, Links & Contact Cards</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge-tag highlight">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.5L19.5 19h-15L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
+          High-Recovery ECC (Level H)
+        </span>
+        <span class="badge-tag">Zero Cloud Tracking</span>
+      </div>
+    </header>
+
+    <!-- Main 2-Column Layout -->
+    <main class="main-layout">
+
+      <!-- Left Column: Inputs & Customization -->
+      <section class="controls-column">
+
+        <!-- 1. Content & Platform Selection Panel -->
+        <article class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              1. Choose Link or Social Media Type
+            </h2>
+            <p id="presetDescription" class="panel-subtitle">Select a platform or enter any custom URL</p>
+          </div>
+
+          <!-- Platform Grid -->
+          <div id="platformGrid" class="platform-grid" role="tablist" aria-label="Platform presets">
+            <!-- Dynamically populated via js/presets.js and js/app.js -->
+          </div>
+
+          <!-- Dynamic Preset Form Container -->
+          <div class="preset-form-box">
+            <form id="presetFormContainer" onsubmit="return false;">
+              <!-- Dynamically populated form fields -->
+            </form>
+          </div>
+        </article>
+
+        <!-- 2. Center Logo Upload & Badge Customization Panel -->
+        <article class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              2. Center Logo & Brand Badge
+            </h2>
+            <p class="panel-subtitle">Upload your custom logo or choose a popular social icon to place in the middle</p>
+          </div>
+
+          <div class="logo-upload-section">
+            <!-- Upload Drag-and-Drop Area -->
+            <div>
+              <input type="file" id="logoFileInput" accept="image/*" class="hidden">
+              <div id="logoDropZone" class="logo-dropzone" tabindex="0" role="button" aria-label="Upload logo image">
+                <div class="logo-dropzone-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <span class="logo-dropzone-text">Click or Drop Logo Here</span>
+                <span class="logo-dropzone-hint">PNG, JPG, SVG, WebP supported</span>
+
+                <!-- Active Uploaded Logo Info -->
+                <div id="logoPreviewContainer" class="logo-preview-box hidden">
+                  <img id="logoPreviewImg" class="logo-preview-thumb" alt="Uploaded logo preview">
+                  <div class="logo-preview-info">
+                    <p class="logo-preview-title">Active Logo</p>
+                    <p class="logo-preview-sub">Centered on QR</p>
+                  </div>
+                  <button type="button" id="removeLogoBtn" class="btn-remove-logo" title="Remove Logo">Remove</button>
+                </div>
+              </div>
+
+              <!-- Quick Demo Logo Button -->
+              <div style="margin-top: 10px;">
+                <button type="button" id="sampleLogoBtn" class="btn-secondary" style="width: 100%;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  Try Sample Brand Logo
+                </button>
+              </div>
+
+              <!-- Preset Center Logos -->
+              <div class="preset-logos-wrap">
+                <span class="preset-logos-label">Or Pick a 1-Click Social Icon:</span>
+                <div id="presetLogosGrid" class="preset-logos-grid">
+                  <!-- Injected via app.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Logo Sizing & Badge Controls -->
+            <div class="logo-controls">
+              <!-- Logo Size Slider -->
+              <div class="control-item">
+                <div class="control-header">
+                  <label for="logoSizeSlider">Logo Size</label>
+                  <span id="logoSizeVal" class="control-val">22%</span>
+                </div>
+                <input type="range" id="logoSizeSlider" min="14" max="30" value="22" step="1">
+              </div>
+
+              <!-- Logo Padding Slider -->
+              <div class="control-item">
+                <div class="control-header">
+                  <label for="logoPaddingSlider">Background Badge Margin</label>
+                  <span id="logoPaddingVal" class="control-val">10px</span>
+                </div>
+                <input type="range" id="logoPaddingSlider" min="0" max="24" value="10" step="2">
+              </div>
+
+              <!-- Badge Shape -->
+              <div class="control-item">
+                <label class="form-label">Badge Shape</label>
+                <div class="segmented-group" role="group" aria-label="Logo Badge Shape">
+                  <button type="button" class="seg-btn" data-logo-shape="circle">Circle</button>
+                  <button type="button" class="seg-btn active" data-logo-shape="rounded">Rounded</button>
+                  <button type="button" class="seg-btn" data-logo-shape="square">Square</button>
+                  <button type="button" class="seg-btn" data-logo-shape="none">None</button>
+                </div>
+              </div>
+
+              <!-- Badge Colors -->
+              <div class="color-inputs-grid" style="margin-top: 10px;">
+                <div class="color-input-box">
+                  <input type="color" id="logoBgColor" value="#ffffff">
+                  <div>
+                    <label for="logoBgColor" class="color-box-label">Badge Fill</label>
+                  </div>
+                </div>
+                <div class="color-input-box">
+                  <input type="color" id="logoBorderColor" value="#e2e8f0">
+                  <div>
+                    <label for="logoBorderColor" class="color-box-label">Border</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Border Width -->
+              <div class="control-item" style="margin-top: 12px;">
+                <div class="control-header">
+                  <label for="logoBorderWidth">Border Width</label>
+                  <span id="logoBorderWidthVal" class="control-val">2px</span>
+                </div>
+                <input type="range" id="logoBorderWidth" min="0" max="8" value="2" step="1">
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Visual Styling & Colors Panel -->
+        <article class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 0 0 0 14 7 7 0 0 0 0-14z"/></svg>
+              3. Visual Styling & Color Themes
+            </h2>
+            <p class="panel-subtitle">Customize QR module geometry, corner finder styles, and gradient colors</p>
+          </div>
+
+          <div class="controls-grid">
+            <!-- Module / Dot Shapes -->
+            <div class="control-item">
+              <label class="form-label">Module Dots Style</label>
+              <div class="segmented-group" role="group" aria-label="Dot shape">
+                <button type="button" class="seg-btn active" data-dot-style="rounded">Rounded</button>
+                <button type="button" class="seg-btn" data-dot-style="dots">Dots</button>
+                <button type="button" class="seg-btn" data-dot-style="classy">Classy</button>
+                <button type="button" class="seg-btn" data-dot-style="square">Square</button>
+              </div>
+            </div>
+
+            <!-- Corner / Finder Shapes -->
+            <div class="control-item">
+              <label class="form-label">Corner Finder Style</label>
+              <div class="segmented-group" role="group" aria-label="Corner finder shape">
+                <button type="button" class="seg-btn active" data-corner-style="rounded">Rounded</button>
+                <button type="button" class="seg-btn" data-corner-style="circle">Circle</button>
+                <button type="button" class="seg-btn" data-corner-style="square">Square</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Color Pickers Row -->
+          <div style="margin-top: 14px;">
+            <label class="form-label">Custom Colors & Gradients</label>
+            <div class="color-inputs-grid">
+              <div class="color-input-box">
+                <input type="color" id="fgColorInput" value="#0f172a">
+                <div>
+                  <label for="fgColorInput" class="color-box-label">Primary Color</label>
+                </div>
+              </div>
+
+              <div class="color-input-box">
+                <input type="color" id="fgColorEndInput" value="#3b82f6">
+                <div>
+                  <label for="fgColorEndInput" class="color-box-label">Gradient End</label>
+                </div>
+              </div>
+
+              <div class="color-input-box">
+                <input type="color" id="bgColorInput" value="#ffffff">
+                <div>
+                  <label for="bgColorInput" class="color-box-label">Background</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gradient Mode & Transparent Background Toggle -->
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; align-items: center;">
+              <div style="flex: 1; min-width: 180px;">
+                <label for="gradientTypeSelect" class="form-label" style="margin-bottom: 4px;">Gradient Direction</label>
+                <select id="gradientTypeSelect" class="form-input">
+                  <option value="linear-diagonal">Linear Diagonal (45°)</option>
+                  <option value="linear-horizontal">Linear Horizontal</option>
+                  <option value="linear-vertical">Linear Vertical</option>
+                  <option value="radial">Radial Glow</option>
+                  <option value="none">Solid Color (Single)</option>
+                </select>
+              </div>
+
+              <div style="padding-top: 18px;">
+                <label class="checkbox-wrapper">
+                  <input type="checkbox" id="bgTransparentCheckbox">
+                  <span>Transparent Background</span>
+                </label>
+              </div>
+
+              <div style="padding-top: 18px;">
+                <label class="checkbox-wrapper">
+                  <input type="checkbox" id="customCornerColorCheckbox">
+                  <span>Custom Corner Accent</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Optional Custom Finder Accent Color -->
+            <div id="cornerColorWrapper" class="hidden" style="margin-top: 12px;">
+              <div class="color-input-box" style="max-width: 220px;">
+                <input type="color" id="cornerColorInput" value="#6366f1">
+                <div>
+                  <label for="cornerColorInput" class="color-box-label">Corner Eye Accent</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Color Palettes -->
+            <div style="margin-top: 18px;">
+              <label class="form-label">Curated Color Palettes</label>
+              <div id="paletteContainer" class="palette-list">
+                <!-- Injected via app.js -->
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Right Column: Live QR Preview & Actions (Sticky) -->
+      <aside class="preview-sidebar">
+        <div class="preview-card">
+
+          <!-- Canvas Display Box -->
+          <div class="canvas-frame">
+            <canvas id="qrCanvas" width="1024" height="1024"></canvas>
+          </div>
+
+          <!-- Error Correction Status Indicator -->
+          <div id="eccStatusBadge" class="ecc-badge high">
+            <span class="badge-dot-green"></span>
+            Level H (30% Redundancy) — 100% Scan Protected
+          </div>
+
+          <!-- Export Actions -->
+          <div class="action-buttons-group">
+            <button type="button" id="downloadPngBtn" class="btn-primary" id="btn_download_png">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download PNG Image
+            </button>
+
+            <div class="button-row">
+              <button type="button" id="downloadSvgBtn" class="btn-secondary" id="btn_download_svg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                  <polyline points="2 17 12 22 22 17"/>
+                  <polyline points="2 12 12 17 22 12"/>
+                </svg>
+                Vector SVG
+              </button>
+
+              <button type="button" id="copyImageBtn" class="btn-secondary" id="btn_copy_image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy Image
+              </button>
+            </div>
+          </div>
+
+          <!-- Resolution Selector -->
+          <div class="resolution-bar">
+            <span>PNG Export Resolution:</span>
+            <select id="resolutionSelect" class="res-select" aria-label="Export Resolution">
+              <option value="512">Standard (512x512)</option>
+              <option value="1024" selected>Retina HD (1024x1024)</option>
+              <option value="2048">Ultra Print (2048x2048)</option>
+            </select>
+          </div>
+
+          <!-- Encoded Raw String Inspection -->
+          <div class="payload-box">
+            <div class="payload-header">
+              <span class="payload-title">Encoded Content</span>
+              <button type="button" id="copyPayloadBtn" class="btn-copy-payload">Copy Link</button>
+            </div>
+            <div id="payloadPreview" class="payload-code">https://antigravity.google</div>
+          </div>
+
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Application Scripts -->
+  <script src="assets/icons.js"></script>
+  <script src="js/qr-engine.js"></script>
+  <script src="js/presets.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

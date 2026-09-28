@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  qr-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qr-generator-app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount files for instant live-editing without rebuilding
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./css:/usr/share/nginx/html/css:ro
+      - ./js:/usr/share/nginx/html/js:ro
+      - ./assets:/usr/share/nginx/html/assets:ro
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
