@@ -75,7 +75,7 @@ docker compose up -d
 ### 2. Open the Application
 Open your web browser and navigate to:
 ```
-http://localhost:8080
+http://localhost:3000
 ```
 
 ### 3. Live Development (Hot Reloading)

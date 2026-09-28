@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   qr-generator:
     build:
@@ -8,13 +6,7 @@ services:
     container_name: qr-generator-app
     restart: unless-stopped
     ports:
-      - "8080:80"
-    volumes:
-      # Mount files for instant live-editing without rebuilding
-      - ./index.html:/usr/share/nginx/html/index.html:ro
-      - ./css:/usr/share/nginx/html/css:ro
-      - ./js:/usr/share/nginx/html/js:ro
-      - ./assets:/usr/share/nginx/html/assets:ro
+      - "3000:80"
     environment:
       - NODE_ENV=production
     healthcheck:
